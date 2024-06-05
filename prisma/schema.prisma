@@ -1,0 +1,113 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model produto {
+  id         Int         @id @default(autoincrement())
+  nome       String
+  descricao  String
+  categoria  String
+  preco      Float
+  imagem     String
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  quantidade Int
+  tamanho    Int
+  maioridade Boolean
+  item_venda item_venda?
+}
+
+model pessoa {
+  id              Int               @id @default(autoincrement())
+  nome            String
+  enderecos       endereco[]
+  cliente         cliente[]
+  pessoa_fisica   pessoa_fisica?
+  pessoa_juridica pessoa_juridica[]
+  user            user?
+  empresas        empresa[]
+}
+
+model pessoa_juridica {
+  id           Int    @id @default(autoincrement())
+  razao_social String
+  cnpj         String @unique
+  id_pessoa    Int
+  pessoa       pessoa @relation(fields: [id_pessoa], references: [id])
+}
+
+model pessoa_fisica {
+  id                 Int      @id @default(autoincrement())
+  cpf                String   @unique @db.VarChar(14)
+  data_de_nascimento DateTime @db.Date
+  pessoa             pessoa   @relation(fields: [id_pessoa], references: [id])
+  id_pessoa          Int      @unique
+}
+
+model empresa {
+  id           Int    @id @default(autoincrement())
+  ramo         String
+  id_pessoa    Int
+  pessoa       pessoa @relation(fields: [id_pessoa], references: [id])
+}
+
+model endereco {
+  id        Int    @id @default(autoincrement())
+  rua       String
+  numero    Int
+  bairro    String
+  cidade    String
+  UF        String @db.VarChar(2)
+  cep       String
+  pessoa_id Int
+  pessoa    pessoa @relation(fields: [pessoa_id], references: [id])
+}
+
+model cliente {
+  id        Int     @id @default(autoincrement())
+  limite    Float
+  id_pessoa Int
+  pessoa    pessoa  @relation(fields: [id_pessoa], references: [id])
+  vendas    venda[]
+}
+
+model user {
+  id          Int    @id @default(autoincrement())
+  username    String @db.Text
+  email       String @unique
+  password    String @db.Text
+  private_key String @db.Text
+  public_key  String @db.Text
+  id_pessoa   Int    @unique
+  pessoa      pessoa @relation(fields: [id_pessoa], references: [id])
+}
+
+model item_venda {
+  id         Int     @id @default(autoincrement())
+  valor      Float
+  quantidade Int
+  id_produto Int     @unique
+  produto    produto @relation(fields: [id_produto], references: [id])
+  id_venda   Int     @unique
+  venda      venda   @relation(fields: [id_venda], references: [id])
+}
+
+model venda {
+  id              Int          @id @default(autoincrement())
+  data_de_criacao DateTime     @default(now())
+  descricao       String?      @db.Text
+  id_cliente      Int
+  cliente         cliente      @relation(fields: [id_cliente], references: [id])
+  itens_venda     item_venda[]
+}
