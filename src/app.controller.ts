@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { AppService } from './app.service';
 
 type Teste = {
@@ -15,8 +15,8 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Get("/teste")
-  async teste(@Body() data: Teste): Promise<any> {
+  @Post("/teste")
+  async teste(@Body() data: any): Promise<any> {
     console.log(data);
     return await this.appService.teste(data.senha);
   }

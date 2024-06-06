@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { LibsodiumService } from './libsodium.service';
 
 @Module({
-    exports: [LibsodiumService]
+    providers: [LibsodiumService],
+    exports: [LibsodiumService],
 })
 export class LibsodiumModule {}
