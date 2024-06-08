@@ -16,9 +16,9 @@ export class AppController {
   }
 
   @Post("/teste")
-  async teste(@Body() data: any): Promise<any> {
+  teste(@Body() data: any): Promise<any> {
     console.log(data);
-    return await this.appService.teste(data.senha);
+    return this.appService.teste(data.senha);
   }
   // async teste1(@Query('text') text: string): Promise<any> {
   //   console.log(text);

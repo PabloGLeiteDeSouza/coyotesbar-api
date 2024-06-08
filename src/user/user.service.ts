@@ -20,7 +20,8 @@ export class UserService {
       id_pessoa: createUserDto.id_pessoa,
       password: password_encripted,
       private_key: private_string_key,
-      public_key: public_string_key
+      public_key: public_string_key,
+      active: true,
     }});
   }
   

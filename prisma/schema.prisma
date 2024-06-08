@@ -89,6 +89,7 @@ model user {
   password    String @db.Text
   private_key String @db.Text
   public_key  String @db.Text
+  active      Boolean
   id_pessoa   Int    @unique
   pessoa      pessoa @relation(fields: [id_pessoa], references: [id])
 }
