@@ -12,8 +12,8 @@ export class UserService {
   async create(createUserDto: CreateUserDtoRevcive) {
     const key_pair = await this.libsodium.generate_key_pair();
     const password_encripted = await this.libsodium.encrypt_with_public_and_private_keys(key_pair.publicKey, key_pair.privateKey, createUserDto.password);
-    const private_string_key = await this.libsodium.uint_8_array_to_string(key_pair.privateKey)
-    const public_string_key = await this.libsodium.uint_8_array_to_string(key_pair.publicKey);
+    const private_string_key = await this.libsodium.uint_8_array_to_hex(key_pair.privateKey)
+    const public_string_key = await this.libsodium.uint_8_array_to_hex(key_pair.publicKey);
     return this.prisma.user.create({data: {
       email: createUserDto.email,
       username: createUserDto.username,

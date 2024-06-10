@@ -18,8 +18,8 @@ export class AuthService {
         if (!user) {
             return null
         }
-        const private_key = await this.libsodium.string_to_uint_8_array(user.private_key)
-        const public_key = await this.libsodium.string_to_uint_8_array(user.public_key)
+        const private_key = await this.libsodium.hex_to_uint_8_array(user.private_key)
+        const public_key = await this.libsodium.hex_to_uint_8_array(user.public_key)
         const password = await this.libsodium.decrypt_with_public_and_private_keys(public_key, private_key, user.password);
         if (password === senha) {
             const { password, ...result } = user;

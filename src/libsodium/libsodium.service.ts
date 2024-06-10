@@ -24,6 +24,18 @@ export class LibsodiumService {
         return sodium.to_string(value);
     }
 
+    async uint_8_array_to_hex(value: Uint8Array){
+        await (await this.sodium).ready;
+        const sodium = (await this.sodium);
+        return sodium.to_hex(value);
+    }
+
+    async hex_to_uint_8_array(value: string){
+        await (await this.sodium).ready;
+        const sodium = (await this.sodium);
+        return sodium.from_hex(value);
+    }
+
     async encrypt_with_public_and_private_keys(public_key: Uint8Array, private_key: Uint8Array, value: string) {
         
         await (await this.sodium).ready;

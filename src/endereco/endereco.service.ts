@@ -25,6 +25,6 @@ export class EnderecoService {
   }
 
   remove(id: number) {
-    return this.prisma.endereco.delete({ where: {id} });
+    return this.prisma.endereco.delete({ where: { id } });
   }
 }
