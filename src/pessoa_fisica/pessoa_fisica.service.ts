@@ -9,22 +9,26 @@ export class PessoaFisicaService {
   constructor(private prisma: PrismaService) {}
 
   create(createPessoaFisicaDto: CreatePessoaFisicaDto) {
-    return 'This action adds a new pessoaFisica';
+    return this.prisma.pessoa_fisica.create({data: createPessoaFisicaDto});
   }
 
   findAll() {
-    return `This action returns all pessoaFisica`;
+    return this.prisma.pessoa_fisica.findMany();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} pessoaFisica`;
+    return this.prisma.pessoa_fisica.findUnique({ where: {id} });
+  }
+
+  findIdPessoa(id_pessoa: number){
+    return this.prisma.pessoa_fisica.findUnique({ where: {id_pessoa}});
   }
 
   update(id: number, updatePessoaFisicaDto: UpdatePessoaFisicaDto) {
-    return `This action updates a #${id} pessoaFisica`;
+    return this.prisma.pessoa_fisica.update({ where: {id}, data: updatePessoaFisicaDto });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} pessoaFisica`;
+    return this.prisma.pessoa_fisica.delete({ where: {id}});
   }
 }

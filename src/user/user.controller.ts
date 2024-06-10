@@ -19,7 +19,28 @@ export class UserController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
+    console.log(id)
     return this.userService.findOne(+id);
+  }
+  
+  @Get('/all/username/:username')
+  findAllUsersByUsername(@Param('username') username: string){
+    return this.userService.findAllUsersByUsername(username);
+  }
+
+  @Get('/all/email/:email')
+  findAllUsersByEmail(@Param('email') email: string){
+    return this.userService.findAllUsersByEmail(email);
+  }
+
+  @Get('/username/:username')
+  findByUsername(@Param('username') username: string) {
+    return this.userService.findByUsername(username);
+  }
+
+  @Get('/email/:email')
+  findByEmail(@Param('email') email: string) {
+    return this.userService.findByEmail(email);
   }
 
   @Patch(':id')

@@ -9,25 +9,22 @@ export class PessoaService {
   constructor(private prisma: PrismaService) {}
 
   create(createPessoaDto: CreatePessoaDto) {
-    if (createPessoaDto) {
-      
-    }
     return this.prisma.pessoa.create({data: createPessoaDto});
   }
 
   findAll() {
-    return `This action returns all pessoa`;
+    return this.prisma.pessoa.findMany();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} pessoa`;
+    return this.prisma.pessoa.findUnique({ where: {id} });
   }
 
   update(id: number, updatePessoaDto: UpdatePessoaDto) {
-    return `This action updates a #${id} pessoa`;
+    return this.prisma.pessoa.update({where: {id}, data: updatePessoaDto});
   }
 
   remove(id: number) {
-    return `This action removes a #${id} pessoa`;
+    return this.prisma.pessoa.delete({where:{id}});
   }
 }

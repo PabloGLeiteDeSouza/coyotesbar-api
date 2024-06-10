@@ -9,7 +9,7 @@ export class ProdutoService {
   constructor(private prisma: PrismaService) {}
 
   create(createProdutoDto: CreateProdutoDto) {
-    return 'This action adds a new produto';
+    return this.prisma.produto.create({ data: createProdutoDto });
   }
 
   findAll() {

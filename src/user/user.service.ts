@@ -29,7 +29,15 @@ export class UserService {
     return this.prisma.user.findMany();
   }
 
-  findOneWithUsername(username: string){
+  findAllUsersByUsername(username: string){
+    return this.prisma.user.findMany({ where: { username } });
+  }
+
+  findAllUsersByEmail(email: string){
+    return this.prisma.user.findMany({ where: { email } });
+  }
+
+  findByUsername(username: string){
     return this.prisma.user.findFirst({
       where: {
         username
@@ -37,7 +45,7 @@ export class UserService {
     });
   }
 
-  findOneWithEmail(email: string){
+  findByEmail(email: string){
     return this.prisma.user.findFirst({
       where: {
         email
@@ -53,11 +61,7 @@ export class UserService {
     return this.prisma.user.update({data: updateUserDto, where: { id }});
   }
 
-  disable(id: number){
-
-  }
-
   remove(id: number) {
-    return `This action removes a #${id} user`;
+    return this.prisma.user.delete({ where: { id } });
   }
 }

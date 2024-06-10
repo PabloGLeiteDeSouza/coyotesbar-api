@@ -9,22 +9,22 @@ export class PessoaJuridicaService {
   constructor(private prisma: PrismaService) {}
 
   create(createPessoaJuridicaDto: CreatePessoaJuridicaDto) {
-    return 'This action adds a new pessoaJuridica';
+    return this.prisma.pessoa_juridica.create({ data: createPessoaJuridicaDto });
   }
 
   findAll() {
-    return `This action returns all pessoaJuridica`;
+    return this.prisma.pessoa_juridica.findMany();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} pessoaJuridica`;
+    return this.prisma.pessoa_juridica.findUnique({ where: { id } });
   }
 
   update(id: number, updatePessoaJuridicaDto: UpdatePessoaJuridicaDto) {
-    return `This action updates a #${id} pessoaJuridica`;
+    return this.prisma.pessoa_juridica.update({ where: { id }, data: updatePessoaJuridicaDto });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} pessoaJuridica`;
+    return this.prisma.pessoa_juridica.delete({ where: { id } });
   }
 }

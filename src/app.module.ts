@@ -12,9 +12,11 @@ import { ProdutoModule } from './produto/produto.module';
 import { EmpresaModule } from './empresa/empresa.module';
 import { AuthModule } from './auth/auth.module';
 import { LibsodiumModule } from './libsodium/libsodium.module';
+import { ItemVendaModule } from './item_venda/item_venda.module';
+import { VendaModule } from './venda/venda.module';
 
 @Module({
-  imports: [PrismaModule, UserModule, ClienteModule, PessoaModule, PessoaFisicaModule, PessoaJuridicaModule, EnderecoModule, ProdutoModule, EmpresaModule, LibsodiumModule, AuthModule],
+  imports: [PrismaModule, UserModule, ClienteModule, PessoaModule, PessoaFisicaModule, PessoaJuridicaModule, EnderecoModule, ProdutoModule, EmpresaModule, LibsodiumModule, AuthModule, ItemVendaModule, VendaModule],
   controllers: [AppController],
   providers: [AppService],
 })

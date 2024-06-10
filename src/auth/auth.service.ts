@@ -14,7 +14,7 @@ export class AuthService {
 
     async validateUserLocal(auth: AuthData): Promise<any>{
         const { login, senha } = auth;
-        const user = login.includes("@") && login.includes(".") ? await this.userService.findOneWithEmail(login) : await this.userService.findOneWithUsername(login);
+        const user = login.includes("@") && login.includes(".") ? await this.userService.findByEmail(login) : await this.userService.findByUsername(login);
         if (!user) {
             return null
         }
