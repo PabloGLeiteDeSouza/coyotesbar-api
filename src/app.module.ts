@@ -14,7 +14,7 @@ import { AuthModule } from './auth/auth.module';
 import { LibsodiumModule } from './libsodium/libsodium.module';
 
 @Module({
-  imports: [PrismaModule, UserModule, ClienteModule, PessoaModule, PessoaFisicaModule, PessoaJuridicaModule, EnderecoModule, ProdutoModule, EmpresaModule, LibsodiumModule],
+  imports: [PrismaModule, UserModule, ClienteModule, PessoaModule, PessoaFisicaModule, PessoaJuridicaModule, EnderecoModule, ProdutoModule, EmpresaModule, LibsodiumModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })
