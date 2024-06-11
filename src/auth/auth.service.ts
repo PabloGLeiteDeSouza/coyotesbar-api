@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { LibsodiumService } from 'src/libsodium/libsodium.service';
-import { AuthData, UserDataType } from 'src/types';
+import { UserDataType } from 'src/types';
 import { UserService } from 'src/user/user.service';
 
 @Injectable()
@@ -12,8 +12,7 @@ export class AuthService {
         private jwtService: JwtService,
     ){}
 
-    async validateUserLocal(auth: AuthData): Promise<any>{
-        const { login, senha } = auth;
+    async validateUserLocal(login: string, senha: string): Promise<any>{
         const user = login.includes("@") && login.includes(".") ? await this.userService.findByEmail(login) : await this.userService.findByUsername(login);
         if (!user) {
             return null
