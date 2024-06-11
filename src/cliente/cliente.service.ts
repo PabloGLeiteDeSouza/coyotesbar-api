@@ -9,22 +9,22 @@ export class ClienteService {
   constructor(private prisma: PrismaService) {}
 
   create(createClienteDto: CreateClienteDto) {
-    return 'This action adds a new cliente';
+    return this.prisma.cliente.create({ data: createClienteDto });
   }
 
   findAll() {
-    return `This action returns all cliente`;
+    return this.prisma.cliente.findMany();
   }
 
   findOne(id: number) {
-    return this.prisma.user.findUnique({where: {id}});
+    return this.prisma.cliente.findUnique({where: {id}});
   }
 
   update(id: number, updateClienteDto: UpdateClienteDto) {
-    return `This action updates a #${id} cliente`;
+    return this.prisma.cliente.update({ where: {id}, data: updateClienteDto });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} cliente`;
+    return this.prisma.cliente.delete({ where: { id } });
   }
 }
