@@ -14,6 +14,7 @@ export class ClienteService {
 
   findAll() {
     return this.prisma.cliente.findMany();
+<<<<<<< HEAD
   }
 
   async findClientsWithName(){
@@ -25,17 +26,27 @@ export class ClienteService {
       dados.push({ name: pessoa.nome, id: pessoa.id })
     })
     return dados;
+=======
+>>>>>>> f9c761af96e706542fc4e287b0d119af2738fb50
   }
 
   findOne(id: number) {
-    return this.prisma.user.findUnique({where: {id}});
+    return this.prisma.cliente.findUnique({where: {id}});
   }
 
   update(id: number, updateClienteDto: UpdateClienteDto) {
+<<<<<<< HEAD
     return this.prisma.cliente.update({ where: { id }, data: updateClienteDto});
   }
 
   remove(id: number) {
     return this.prisma.cliente.delete({where: { id }});
+=======
+    return this.prisma.cliente.update({ where: {id}, data: updateClienteDto });
+  }
+
+  remove(id: number) {
+    return this.prisma.cliente.delete({ where: { id } });
+>>>>>>> f9c761af96e706542fc4e287b0d119af2738fb50
   }
 }
