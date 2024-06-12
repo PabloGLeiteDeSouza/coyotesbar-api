@@ -14,20 +14,19 @@ export class ClienteService {
 
   findAll() {
     return this.prisma.cliente.findMany();
-<<<<<<< HEAD
   }
 
   async findClientsWithName(){
     const dados = [];
     const clientes = await this.prisma.cliente.findMany();
-    clientes.forEach( async cliente => { 
-      const { id_pessoa } = cliente;
+    for(const cliente of clientes){
+      const { id, id_pessoa, limite } = cliente;
       const pessoa = await this.prisma.pessoa.findUnique({ where: { id: id_pessoa }});
-      dados.push({ name: pessoa.nome, id: pessoa.id })
-    })
+      const pessoa_fisica = await this.prisma.pessoa_fisica.findUnique({ where: { id_pessoa: id_pessoa } });
+      const enderecos = await this.prisma.endereco.findMany({ where: { pessoa_id: id_pessoa } })
+      dados.push({ nome: pessoa.nome, id_pessoa: pessoa.id, limite, id, id_pessoa_fisica: pessoa_fisica.id, cpf: pessoa_fisica.cpf, data_de_nascimento: pessoa_fisica.data_de_nascimento, enderecos })
+    }
     return dados;
-=======
->>>>>>> f9c761af96e706542fc4e287b0d119af2738fb50
   }
 
   findOne(id: number) {
@@ -35,18 +34,10 @@ export class ClienteService {
   }
 
   update(id: number, updateClienteDto: UpdateClienteDto) {
-<<<<<<< HEAD
     return this.prisma.cliente.update({ where: { id }, data: updateClienteDto});
   }
 
   remove(id: number) {
     return this.prisma.cliente.delete({where: { id }});
-=======
-    return this.prisma.cliente.update({ where: {id}, data: updateClienteDto });
-  }
-
-  remove(id: number) {
-    return this.prisma.cliente.delete({ where: { id } });
->>>>>>> f9c761af96e706542fc4e287b0d119af2738fb50
   }
 }
