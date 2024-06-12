@@ -17,6 +17,11 @@ export class ClienteController {
     return this.clienteService.findAll();
   }
 
+  @Get('/with-name')
+  findClientsWithName(){
+    return this.clienteService.findClientsWithName();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.clienteService.findOne(+id);

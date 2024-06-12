@@ -17,6 +17,11 @@ export class EmpresaController {
     return this.empresaService.findAll();
   }
 
+  @Get('/with-name')
+  findToView(){
+    return this.empresaService.findEmpresasWithName();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.empresaService.findOne(+id);

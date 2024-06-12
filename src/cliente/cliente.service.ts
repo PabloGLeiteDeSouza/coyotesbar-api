@@ -9,11 +9,22 @@ export class ClienteService {
   constructor(private prisma: PrismaService) {}
 
   create(createClienteDto: CreateClienteDto) {
-    return 'This action adds a new cliente';
+    return this.prisma.cliente.create({ data: createClienteDto });
   }
 
   findAll() {
-    return `This action returns all cliente`;
+    return this.prisma.cliente.findMany();
+  }
+
+  async findClientsWithName(){
+    const dados = [];
+    const clientes = await this.prisma.cliente.findMany();
+    clientes.forEach( async cliente => { 
+      const { id_pessoa } = cliente;
+      const pessoa = await this.prisma.pessoa.findUnique({ where: { id: id_pessoa }});
+      dados.push({ name: pessoa.nome, id: pessoa.id })
+    })
+    return dados;
   }
 
   findOne(id: number) {
@@ -21,10 +32,10 @@ export class ClienteService {
   }
 
   update(id: number, updateClienteDto: UpdateClienteDto) {
-    return `This action updates a #${id} cliente`;
+    return this.prisma.cliente.update({ where: { id }, data: updateClienteDto});
   }
 
   remove(id: number) {
-    return `This action removes a #${id} cliente`;
+    return this.prisma.cliente.delete({where: { id }});
   }
 }
