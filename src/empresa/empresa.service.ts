@@ -25,27 +25,19 @@ export class EmpresaService {
       const pessoa_fisica = await this.prisma.pessoa_fisica.findUnique({where: { id_pessoa }});
       const pessoa_juridica = await this.prisma.pessoa_juridica.findMany({ where: { id_pessoa } });
       if (pessoa_juridica.length > 0) {
-        pessoa_juridica.forEach((value) => {
-          dados.push({ 
-            id , 
-            nome: pessoa.nome, 
-            razao_social: value.razao_social,
-            cnpj: value.cnpj,
-            id_pessoa, 
-            id_pessoa_juridica: value.id,
-            ramo: empresa.ramo,
-          })
-        })
-      }
+        for (const pj of pessoa_juridica) {
+          const endereco = await this.prisma.endereco.findUnique({where:{id: pj.id_endereco}});
+          dados.push({...endereco, ...pj, ...pessoa, id_pessoa_juridica: pj.id, ...empresa})
+        }
+      } 
       if (pessoa_fisica) {
+        const endereco = await this.prisma.endereco.findUnique({where:{id: pessoa_fisica.id_endereco}})
         dados.push({ 
-          id, 
-          nome: pessoa.nome, 
-          cpf: pessoa_fisica.cpf, 
-          data_de_nascimento: pessoa_fisica.data_de_nascimento, 
-          id_pessoa, 
+          ...endereco,
+          ...pessoa_fisica,
           id_pessoa_fisica: pessoa_fisica.id,
-          ramo: empresa.ramo,
+          ...pessoa,
+          ...empresa
         })
       }
     }

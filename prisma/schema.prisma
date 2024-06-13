@@ -30,7 +30,6 @@ model produto {
 model pessoa {
   id              Int               @id @default(autoincrement())
   nome            String
-  enderecos       endereco[]
   cliente         cliente[]
   pessoa_fisica   pessoa_fisica?
   pessoa_juridica pessoa_juridica[]
@@ -39,11 +38,13 @@ model pessoa {
 }
 
 model pessoa_juridica {
-  id           Int    @id @default(autoincrement())
+  id           Int      @id @default(autoincrement())
   razao_social String
-  cnpj         String @unique
+  cnpj         String   @unique
   id_pessoa    Int
-  pessoa       pessoa @relation(fields: [id_pessoa], references: [id])
+  pessoa       pessoa   @relation(fields: [id_pessoa], references: [id])
+  endereco     endereco @relation(fields: [id_endereco], references: [id])
+  id_endereco  Int      @unique
 }
 
 model pessoa_fisica {
@@ -52,25 +53,28 @@ model pessoa_fisica {
   data_de_nascimento DateTime @db.Date
   pessoa             pessoa   @relation(fields: [id_pessoa], references: [id])
   id_pessoa          Int      @unique
+  endereco           endereco @relation(fields: [id_endereco], references: [id])
+  id_endereco        Int      @unique
 }
 
 model empresa {
-  id           Int    @id @default(autoincrement())
-  ramo         String
-  id_pessoa    Int
-  pessoa       pessoa @relation(fields: [id_pessoa], references: [id])
+  id        Int    @id @default(autoincrement())
+  ramo      String
+  id_pessoa Int
+  pessoa    pessoa @relation(fields: [id_pessoa], references: [id])
 }
 
 model endereco {
-  id        Int    @id @default(autoincrement())
-  rua       String
-  numero    Int
-  bairro    String
-  cidade    String
-  UF        String @db.VarChar(2)
-  cep       String
-  pessoa_id Int
-  pessoa    pessoa @relation(fields: [pessoa_id], references: [id])
+  id              Int              @id @default(autoincrement())
+  rua             String
+  numero          Int
+  complemento     String           @db.Text
+  bairro          String
+  cidade          String
+  UF              String           @db.VarChar(2)
+  cep             String
+  pessoa_fisica   pessoa_fisica?
+  pessoa_juridica pessoa_juridica?
 }
 
 model cliente {
@@ -82,15 +86,15 @@ model cliente {
 }
 
 model user {
-  id          Int    @id @default(autoincrement())
-  username    String @db.Text
-  email       String @unique
-  password    String @db.Text
-  private_key String @db.Text
-  public_key  String @db.Text
+  id          Int     @id @default(autoincrement())
+  username    String  @db.Text
+  email       String  @unique
+  password    String  @db.Text
+  private_key String  @db.Text
+  public_key  String  @db.Text
   active      Boolean
-  id_pessoa   Int    @unique
-  pessoa      pessoa @relation(fields: [id_pessoa], references: [id])
+  id_pessoa   Int     @unique
+  pessoa      pessoa  @relation(fields: [id_pessoa], references: [id])
 }
 
 model item_venda {

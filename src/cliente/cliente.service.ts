@@ -23,8 +23,8 @@ export class ClienteService {
       const { id, id_pessoa, limite } = cliente;
       const pessoa = await this.prisma.pessoa.findUnique({ where: { id: id_pessoa }});
       const pessoa_fisica = await this.prisma.pessoa_fisica.findUnique({ where: { id_pessoa: id_pessoa } });
-      const enderecos = await this.prisma.endereco.findMany({ where: { pessoa_id: id_pessoa } })
-      dados.push({ nome: pessoa.nome, id_pessoa: pessoa.id, limite, id, id_pessoa_fisica: pessoa_fisica.id, cpf: pessoa_fisica.cpf, data_de_nascimento: pessoa_fisica.data_de_nascimento, enderecos })
+      const endereco = await this.prisma.endereco.findFirst({ where: { id: pessoa_fisica.id_endereco } })
+      dados.push({...endereco, ...pessoa_fisica, ...pessoa, ...cliente });
     }
     return dados;
   }
